@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=confirm
+  name: configmap-three
+data:
+  key1: value1
+  key2: value2

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: Delete=confirm
+  name: configmap-four
+data:
+  key1: value1
+  key2: value2

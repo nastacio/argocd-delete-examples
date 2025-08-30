@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: example-appset
+  namespace: argocd-worker
+spec:
+  goTemplate: true
+  goTemplateOptions:
+    - missingkey=error
+  generators:
+    - list:
+        elements:
+          - cluster: https://kubernetes.default.svc
+            name: example-app
+  template:
+    metadata:
+      name: "{{ "{{" }} .name {{ "}}" }}"
+    spec:
+      project: example-project
+      source:
+        repoURL: https://github.com/nastacio/argocd-delete-examples
+        targetRevision: HEAD
+        path: resources
+      destination:
+        server: "{{ "{{" }} .cluster {{ "}}" }}"
+        namespace: example-namespace
+      syncPolicy:
+        automated:
+          prune: false
+          selfHeal: false
+        syncOptions:
+          - CreateNamespace=true
